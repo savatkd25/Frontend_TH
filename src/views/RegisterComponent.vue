@@ -2,7 +2,6 @@
   <div class="auth-container">
     <h2>Registro</h2>
     <form @submit.prevent="register">
-
       <div class="form-group">
         <label for="name">Nombre Completo</label>
         <input type="text" v-model="name" required placeholder="Ingresa tu nombre" />
@@ -15,46 +14,60 @@
         <label for="password">Contraseña</label>
         <input type="password" v-model="password" required placeholder="Ingresa tu contraseña" />
       </div>
+      <div class="form-group">
+        <label for="password_confirmation">Confirmar Contraseña</label>
+        <input type="password" v-model="password_confirmation" required placeholder="Confirma tu contraseña" />
+      </div>
       <button type="submit">Registrarse</button>
       <p>¿Ya tienes una cuenta? <router-link to="/login">Inicia sesión</router-link></p>
     </form>
   </div>
-  
 </template>
 
 <script>
+import apiClient from '@/axios';
+
 export default {
   name: 'RegisterComponent',
   data() {
     return {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      password_confirmation: ''
     }
   },
   methods: {
-    register() {
-      alert(`Registrando a ${this.name} con el correo ${this.email}`);
-      // Aquí puedes agregar la lógica para conectarte con tu backend de Laravel
+    async register() {
+      try {
+        const response = await apiClient.post('/api/register', {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          password_confirmation: this.password_confirmation
+        });
+        console.log('Registration successful:', response.data);
+        // Redirigir al usuario a la página de inicio de sesión o guardar el token
+      } catch (error) {
+        console.error('Error during registration:', error);
+        // Manejar el error, como mostrar un mensaje al usuario
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-
-
 .auth-container {
   background-color: #ffffff79;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    text-align: center;
-    position: absolute;
-    left: 50px; /* Ajusta según sea necesario */
-    top: 150px; /* Ajusta este valor para bajar el cuadro */
-  
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+  position: absolute;
+  left: 50px; /* Ajusta según sea necesario */
+  top: 150px; /* Ajusta este valor para bajar el cuadro */
 }
 
 .auth-container h2 {
@@ -110,7 +123,7 @@ p {
 }
 
 p a {
-  color:#007bff;
+  color: #007bff;
   text-decoration: none;
 }
 

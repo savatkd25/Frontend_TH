@@ -15,7 +15,7 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  background-image: url('C:\Users\USUARIO\Desktop\proyecto\talentohumano\src\assets\talento.jpg');
+  background-image: url('../src/assets/talento.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

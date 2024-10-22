@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import apiClient from '@/axios';
+
 export default {
   name: 'LoginComponent',
   data() {
@@ -26,27 +28,35 @@ export default {
     }
   },
   methods: {
-    login() {
-      alert(`Iniciando sesión con ${this.email}`);
-      // Aquí puedes agregar la lógica para conectarte con tu backend de Laravel
+    async login() {
+      try {
+        const response = await apiClient.post('/api/login', {
+          email: this.email,
+          password: this.password
+        });
+        console.log('Login successful:', response.data);
+        // Guardar el token en el almacenamiento local o en el estado de la aplicación
+        localStorage.setItem('token', response.data.access_token);
+      } catch (error) {
+        console.error('Error during login:', error);
+        // Manejar el error, como mostrar un mensaje al usuario
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-
-
 .auth-container {
   background-color: #ffffff79;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    text-align: center;
-    position: absolute;
-    left: 50px; /* Ajusta según sea necesario */
-    top: 150px; /* Ajusta este valor para bajar el cuadro */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+  position: absolute;
+  left: 50px; /* Ajusta según sea necesario */
+  top: 150px; /* Ajusta este valor para bajar el cuadro */
 }
 
 .auth-container h2 {
