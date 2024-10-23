@@ -15,35 +15,27 @@
     </form>
   </div>
 </template>
+ 
 
+- En el script, importamos axios y lo utilizamos para enviar una solicitud POST a la ruta /login con los datos del usuario.
 <script>
-import apiClient from '@/axios';
+import axios from '../axios';
 
 export default {
-  name: 'LoginComponent',
-  data() {
-    return {
-      email: '',
-      password: ''
-    }
-  },
   methods: {
     async login() {
       try {
-        const response = await apiClient.post('/api/login', {
+        const response = await axios.post('/login', {
           email: this.email,
-          password: this.password
+          password: this.password,
         });
-        console.log('Login successful:', response.data);
-        // Guardar el token en el almacenamiento local o en el estado de la aplicación
-        localStorage.setItem('token', response.data.access_token);
+        console.log(response.data);
       } catch (error) {
-        console.error('Error during login:', error);
-        // Manejar el error, como mostrar un mensaje al usuario
+        console.error(error);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

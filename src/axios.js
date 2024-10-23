@@ -1,11 +1,6 @@
 import axios from 'axios';
 
-const apiClient = axios.create({
-  baseURL: process.env.VUE_APP_API_BASE_URL || 'http://127.0.0.1:8000',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true,
-});
+axios.defaults.baseURL = 'http://localhost:8000/api'; // Cambia el puerto según tu configuración
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 
-export default apiClient;
+export default axios;

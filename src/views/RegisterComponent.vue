@@ -25,36 +25,36 @@
 </template>
 
 <script>
-import apiClient from '@/axios';
+import axios from '../axios';
 
 export default {
-  name: 'RegisterComponent',
   data() {
     return {
       name: '',
       email: '',
       password: '',
-      password_confirmation: ''
-    }
+      password_confirmation: '',
+      error: null,
+    };
   },
   methods: {
     async register() {
       try {
-        const response = await apiClient.post('/api/register', {
+        const response = await axios.post('/register', {
           name: this.name,
           email: this.email,
           password: this.password,
-          password_confirmation: this.password_confirmation
+          password_confirmation: this.password_confirmation,
         });
-        console.log('Registration successful:', response.data);
-        // Redirigir al usuario a la página de inicio de sesión o guardar el token
+        console.log(response.data);
+        // Puedes redirigir o mostrar un mensaje de éxito aquí
       } catch (error) {
-        console.error('Error during registration:', error);
-        // Manejar el error, como mostrar un mensaje al usuario
+        this.error = error.response.data;
+        console.error(error);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
